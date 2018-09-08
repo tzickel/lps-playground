@@ -1,0 +1,9 @@
+{
+  "name": "lps",
+  "version": "0.0.1",
+  "description": "a playground for the lps",
+  "main": "index.js",
+  "dependencies": {
+    "vscode-jsonrpc": "^3.6.2"
+  }
+}

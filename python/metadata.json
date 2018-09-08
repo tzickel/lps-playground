@@ -1,0 +1,15 @@
+{
+    "information": {
+        "name": "Simple Calculator",
+        "version": "0.1",
+        "description": "A simple calculator"
+    },
+    "runtime": {
+        "command": [
+            [
+                "python", "calc.py"
+            ]
+        ],
+        "errorMessage": "I need some version of python to run"
+    }
+}
