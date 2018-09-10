@@ -28,7 +28,6 @@ class PluginBridge(object):
         self._resolver = False
         self._requests = deque()
         self._requests_lock = Lock()
-        self._running_id = 0
         self._request_start_time = None
         self._client_name = None
 
@@ -126,15 +125,13 @@ class PluginBridge(object):
 
     def request(self, text):
         with self._requests_lock:
-            self._running_id += 1
-            id_ = str(self._running_id)
             if not self._requests:
                 if self.running:
                     self._request_start_time = time.time()
-                    self._resolver.notify("request", id=id_, text=text)
-                    return id_
-            self._requests.append({"id": id_, "text": text})
-            return id_
+                    self._resolver.notify("request", text)
+                    return
+            self._requests.append({"text": text})
+            return
 
     def _process_pending_requests(self):
         if self._requests:
@@ -144,11 +141,11 @@ class PluginBridge(object):
                     last = self._requests.popleft()
                     if self._requests:
                         self._request_start_time = time.time()
-                        self.on_entriesfinished(last["id"], fake=True)
+                        self.on_entriesfinished(fake=True)
                 if last:
                     self._request_start_time = time.time()
                     self._resolver.notify(
-                        "request", id=last["id"], text=last["text"]
+                        "request", last["text"]
                     )
 
     def on_helloclient(self, name, apiversion):
@@ -158,9 +155,9 @@ class PluginBridge(object):
     def on_entriesadd(self, entries):
         print("add", entries)
 
-    def on_entriesfinished(self, id, fake=False):
+    def on_entriesfinished(self, fake=False):
         request_time = time.time() - self._request_start_time
-        print("finished", id, request_time, fake)
+        print("finished", request_time, fake)
         if not fake:
             self._process_pending_requests()
 

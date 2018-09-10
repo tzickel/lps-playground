@@ -74,9 +74,9 @@ module.exports = class PluginBridge extends EventEmitter {
 				this.emit('entriesadd', entries);
 			});
 
-			connection.onNotification('entriesfinished', (id) => {
+			connection.onNotification('entriesfinished', () => {
 				let end = new Date();
-				this.emit('entriesfinished', id, end - this.request_start_time);
+				this.emit('entriesfinished', end - this.request_start_time);
 			});
 
 			connection.onNotification('entriesremove', (ids) => {
@@ -125,8 +125,8 @@ module.exports = class PluginBridge extends EventEmitter {
 		}
 	}
 
-	request(id, text) {
+	request(text) {
 		this.request_start_time = new Date();
-		this.connection.sendNotification('request', { 'id': id, 'text': text });
+		this.connection.sendNotification('request', [text]);
 	}
 }

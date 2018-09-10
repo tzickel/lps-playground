@@ -14,7 +14,7 @@ class CalculatorPlugin(BasePlugin):
         self._server_name = name
         self.notify("helloclient", name=self._name, apiversion="v0.1")
 
-    def on_request(self, id, text):
+    def on_request(self, text):
         self.notify("entriesremoveall")
         try:
             if text and self._match.match(text):
@@ -27,7 +27,7 @@ class CalculatorPlugin(BasePlugin):
         except Exception:
             pass
         finally:
-            self.notify("entriesfinished", id=id)
+            self.notify("entriesfinished")
 
     def on_shutdown(self):
         sys.exit(0)
