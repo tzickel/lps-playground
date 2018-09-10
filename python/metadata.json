@@ -7,9 +7,12 @@
     "runtime": {
         "command": [
             [
+                "./docker_run"
+            ],
+            [
                 "python", "calc.py"
             ]
         ],
-        "errorMessage": "I need some version of python to run"
+        "errorMessage": "I need some version of python or docker to run"
     }
 }

@@ -1,0 +1,1 @@
+docker build . -t calc:local && docker save calc:local -o calc_local.tgz

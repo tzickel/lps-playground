@@ -1,0 +1,3 @@
+#!/bin/sh
+#docker load -i calc_local.tgz > /dev/null && docker run -i calc:local
+docker run -i calc:local
